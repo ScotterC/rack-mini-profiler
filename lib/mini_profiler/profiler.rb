@@ -382,6 +382,8 @@ module Rack
     end
 
     def inject(fragment, script)
+      fragment.force_encoding("UTF-8")
+
       if fragment.match(/<\/body>/i)
         # explicit </body>
 
@@ -397,7 +399,7 @@ module Rack
 
         return fragment + script
       end
-      fragment.force_encoding("UTF-8")
+
       matches = fragment.scan(regex).length
       index = 1
       fragment.gsub(regex) do
