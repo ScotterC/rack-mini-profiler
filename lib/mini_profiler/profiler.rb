@@ -397,7 +397,7 @@ module Rack
 
         return fragment + script
       end
-
+      fragment.force_encoding("UTF-8")
       matches = fragment.scan(regex).length
       index = 1
       fragment.gsub(regex) do
@@ -410,7 +410,8 @@ module Rack
           # if for whatever crazy reason we dont get a utf string,
           #   just force the encoding, no utf in the mp scripts anyway
           if script.respond_to?(:encoding) && script.respond_to?(:force_encoding)
-            (script + close_tag).force_encoding(fragment.encoding)
+            # (script + close_tag).force_encoding(fragment.encoding)
+            (script + close_tag).force_encoding("UTF-8")
           else
             script + close_tag
           end
